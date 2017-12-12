@@ -1,0 +1,43 @@
+{
+  "name": "book-club-api",
+  "version": "1.0.0",
+  "description": "free code camp book trading club api",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyawzintun/book-club-api.git"
+  },
+  "keywords": [
+    "free",
+    "code",
+    "camp",
+    "book",
+    "trading",
+    "club",
+    "api"
+  ],
+  "author": "KZT",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kyawzintun/voting-app-api/issues"
+  },
+  "homepage": "https://github.com/kyawzintun/voting-app-api#readme",
+  "dependencies": {
+    "bcrypt": "1.0.3",
+    "body-parser": "1.18.2",
+    "cors": "2.8.4",
+    "express": "4.16.2",
+    "mongoose": "4.10.8",
+    "passport": "0.4.0",
+    "passport-local": "1.0.0",
+    "request": "2.83.0",
+    "validator": "9.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}
