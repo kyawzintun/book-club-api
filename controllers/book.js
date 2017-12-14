@@ -13,17 +13,22 @@ async function addBook(email,password,book) {
 	await isBookAlreadyExist(book.id, book.ownerId); 
   	return createBook(book);
   } catch (error) {
-    throw new ServerError('Internal Server Error', 500);
+    throw new ServerError(error.message, error.status);
   }
 }
 
-function getAllBook(email, password) {
-	// requireAuthentication(email, password);
+function getAllBook() {
 	return getBooks();
+}
+
+function getBookById(email, password, ownerId) {
+	requireAuthentication(email, password);
+	return getBooks(ownerId);
 }
 
 module.exports = {
   searchBooks,
   addBook,
-  getAllBook
+  getAllBook,
+  getBookById
 };

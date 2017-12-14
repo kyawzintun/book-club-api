@@ -12,8 +12,13 @@ async function createBook(book) {
   }
 }
 
-async function getBooks(){
-  const book = await Book.find({}).exec();
+async function getBooks(ownerId){
+  let book;
+  if(ownerId) {
+    book = await Book.find({"ownerId": ownerId}).exec();
+  }else {
+    book = await Book.find({}).sort('-createdAt').exec();
+  }
   try {
     return book;
   } catch (err) {
