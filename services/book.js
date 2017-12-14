@@ -12,6 +12,15 @@ async function createBook(book) {
   }
 }
 
+async function getBooks(){
+  const book = await Book.find({}).exec();
+  try {
+    return book;
+  } catch (err) {
+    throw new ServerError(err, 500);
+  }
+}
+
 async function searchBookInGoogle(keyword) {
   if (!keyword) {
     throw new ServerError('Keyword can\'t be undefined', 400);
@@ -57,5 +66,6 @@ function searchBook(keyword) {
 
 module.exports = {
   createBook,
-  searchBookInGoogle
+  searchBookInGoogle,
+  getBooks
 };
