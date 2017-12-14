@@ -1,7 +1,7 @@
 const auth = require('./auth');
-const home = require('./home');
+const book = require('./book');
 
 module.exports = {
   auth,
-  home,
+  book,
 };

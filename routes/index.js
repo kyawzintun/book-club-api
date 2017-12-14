@@ -3,7 +3,7 @@ const controllers = require('../controllers');
 const router = express.Router();
 const {
   auth,
-  home,
+  book,
 } = controllers;
 
 const controllerHandler = (promise, params) => async (req, res, next) => {
@@ -24,11 +24,10 @@ router.post('/signin', c(auth.signin, (req, res, next) => [req, res, next]));
 router.post('/signup', c(auth.signup, (req, res, next) => [req, res, next]));
 
 /**
- * Home.
+ * Book.
  */
-router.get('/', c(home.hello));
-router.get('/greet/:name', c(home.getGreeting, req => [req.params.name]));
-router.post('/greet/', c(home.postGreeting, req => [req.body.name]));
+router.get('/search-books', c(book.searchBooks, req => [req.query.keyword]));
+router.post('/add-book/', c(book.addBook, req => [req.headers.email, req.headers.password, req.body]));
 
 /**
  * Error-handler.
