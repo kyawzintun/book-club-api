@@ -30,6 +30,7 @@ router.get('/get-books', c(book.getAllBook, req => [req.headers]));
 router.get('/get-books/:ownerId', c(book.getBookById, req => [req.headers.email, req.headers.password,req.params.ownerId]));
 router.get('/search-books', c(book.searchBooks, req => [req.query.keyword]));
 router.get('/wish-list/:reqId', c(book.getWishList, req => [req.headers.email, req.headers.password, req.params.reqId]));
+router.get('/required-list/:ownerId', c(book.getRequiredList, req => [req.headers.email, req.headers.password, req.params.ownerId]));
 router.post('/add-book/', c(book.addBook, req => [req.headers.email, req.headers.password, req.body]));
 router.put('/request-book/', c(book.requestBook, req => [req.headers.email, req.headers.password, req.body]));
 router.put('/remove-from-wishlist/', c(book.removeFromWishList, req => [req.headers.email, req.headers.password, req.body]));

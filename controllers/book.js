@@ -25,9 +25,14 @@ function getBookById(email, password, ownerId) {
   return book.getBooks(ownerId);
 }
 
-function removeOwnBook(email, password, body) {
+function getWishList(email, password, reqId) {
   requireAuthentication(email, password);
-  return book.removeYourBook(body);
+  return book.getWishListBook(reqId);
+}
+
+function getRequiredList(email, password, ownerId) {
+  requireAuthentication(email, password);
+  return book.getRequiredList(ownerId);
 }
 
 function requestBook(email, password, body) {
@@ -35,9 +40,9 @@ function requestBook(email, password, body) {
   return book.addToWishList(body);
 }
 
-function getWishList(email, password, reqId) {
+function removeOwnBook(email, password, body) {
   requireAuthentication(email, password);
-  return book.getWishListBook(reqId);
+  return book.removeYourBook(body);
 }
 
 function removeFromWishList(email, password, body) {
@@ -50,8 +55,9 @@ module.exports = {
   addBook,
   getAllBook,
   getBookById,
-  removeOwnBook,
-  requestBook,
   getWishList,
-  removeFromWishList
+  getRequiredList,
+  requestBook,
+  removeOwnBook,
+  removeFromWishList,
 };
