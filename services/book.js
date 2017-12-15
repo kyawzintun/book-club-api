@@ -17,7 +17,7 @@ async function getBooks(ownerId){
   if(ownerId) {
     book = await Book.find({"ownerId": ownerId}).exec();
   }else {
-    book = await Book.find({}).sort('-createdAt').exec();
+    book = await Book.find({"requestedId":null}).sort('-createdAt').exec();
   }
   try {
     return book;
@@ -31,6 +31,33 @@ async function removeYourBook(body){
   if(body.ownerId && body.id) {
     book = await Book.deleteOne({"ownerId": body.ownerId, "id": body.id});
   }
+  try {
+    return book;
+  } catch (err) {
+    throw new ServerError(err, 500);
+  }
+}
+
+async function addToWishList(body){
+  const book = await Book.updateOne({"_id": body._id},{$set :{"requestedId": body.requestedId}});
+  try {
+    return book;
+  } catch (err) {
+    throw new ServerError(err, 500);
+  }
+}
+
+async function getWishListBook(reqId){
+  const  book = await Book.find({"requestedId": reqId}).exec();
+  try {
+    return book;
+  } catch (err) {
+    throw new ServerError(err, 500);
+  }
+}
+
+async function removeFromWishList(body){
+  const book = await Book.updateOne({"requestedId": body.reqId, "id": body.id},{$set :{"requestedId": null }});
   try {
     return book;
   } catch (err) {
@@ -85,5 +112,8 @@ module.exports = {
   createBook,
   searchBookInGoogle,
   getBooks,
-  removeYourBook
+  removeYourBook,
+  addToWishList,
+  getWishListBook,
+  removeFromWishList
 };

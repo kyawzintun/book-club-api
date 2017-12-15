@@ -14,7 +14,7 @@ const BookSchema = new Schema({
   infoLink: {type: String},
   pageCount: {type: String},
   publishedDate: {type: String},
-  requested: {type: Boolean},
+  requestedId: {type: String},
 }, { timestamps: true });
 
 module.exports = mongoose.model('Book', BookSchema);
