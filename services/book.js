@@ -26,6 +26,18 @@ async function getBooks(ownerId){
   }
 }
 
+async function removeYourBook(body){
+  let book;
+  if(body.ownerId && body.id) {
+    book = await Book.deleteOne({"ownerId": body.ownerId, "id": body.id});
+  }
+  try {
+    return book;
+  } catch (err) {
+    throw new ServerError(err, 500);
+  }
+}
+
 async function searchBookInGoogle(keyword) {
   if (!keyword) {
     throw new ServerError('Keyword can\'t be undefined', 400);
@@ -72,5 +84,6 @@ function searchBook(keyword) {
 module.exports = {
   createBook,
   searchBookInGoogle,
-  getBooks
+  getBooks,
+  removeYourBook
 };
