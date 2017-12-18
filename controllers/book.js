@@ -6,11 +6,11 @@ function searchBooks(keyword) {
   return book.searchBookInGoogle(keyword);
 }
 
-async function addBook(email,password,book) {
+async function addBook(email,password,bookObj) {
   requireAuthentication(email, password);
   try {
-	  await isBookAlreadyExist(book.id, book.ownerId); 
-  	return book.createBook(book);
+	  await isBookAlreadyExist(bookObj.id, bookObj.ownerId); 
+  	return book.createBook(bookObj);
   } catch (error) {
     throw new ServerError(error.message, error.status);
   }
@@ -35,9 +35,24 @@ function getRequiredList(email, password, ownerId) {
   return book.getRequiredList(ownerId);
 }
 
-function requestBook(email, password, body) {
+async function requestBook(email, password, body) {
   requireAuthentication(email, password);
-  return book.addToWishList(body);
+  try {
+    await isBookAlreadyExist(body.id, body.requestedId); 
+    return book.addToWishList(body);
+  } catch (error) {
+    throw new ServerError(error.message, error.status);
+  }
+}
+
+function rejectRequestBook(email, password, body) {
+  requireAuthentication(email, password);
+  return book.rejectRequestBook(body);
+}
+
+function confirmRequestBook(email, password, body) {
+  requireAuthentication(email, password);
+  return book.confirmRequestBook(body);
 }
 
 function removeOwnBook(email, password, body) {
@@ -58,6 +73,8 @@ module.exports = {
   getWishList,
   getRequiredList,
   requestBook,
+  rejectRequestBook,
+  confirmRequestBook,
   removeOwnBook,
   removeFromWishList,
 };

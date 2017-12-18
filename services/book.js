@@ -1,6 +1,6 @@
 const { ServerError } = require('../helpers/server');
 const request = require('request');
-const Book = require('../models/Book');
+const { Book,TradedBook } = require('../models/Book');
 
 async function createBook(book) {
   const newBook = new Book(book);
@@ -50,6 +50,26 @@ async function addToWishList(body){
     return book;
   } catch (err) {
     throw new ServerError(err, 500);
+  }
+}
+
+async function rejectRequestBook(body){
+  const book = await Book.updateOne({"id": body.id,"requestedId": body.reqId},{$set :{"requestedId": null}});
+  try {
+    return book;
+  } catch (err) {
+    throw new ServerError(err, 500);
+  }
+}
+
+async function confirmRequestBook(body){
+  let updatedBook = await Book.findOneAndUpdate({"id": body.id,"ownerId": body.ownerId,"requestedId": body.reqId},{$set :{"ownerId": body.reqId,"requestedId": null}},{new: true});
+  const newTradedBook = new TradedBook(updatedBook);
+  try {
+    await newTradedBook.validate();
+    return newTradedBook.save();
+  } catch (validateError) {
+    throw new ServerError(validateError.message, 400);
   }
 }
 
@@ -123,7 +143,9 @@ module.exports = {
   getBooks,
   getWishListBook,
   getRequiredList,
-  removeYourBook,
   addToWishList,
+  rejectRequestBook,
+  confirmRequestBook,
+  removeYourBook,
   removeFromWishList
 };

@@ -1,5 +1,5 @@
 const { ServerError } = require('../helpers/server');
-const { Book } = require('../models');
+const { Book } = require('../models/Book');
 
 function requireAuthentication(user, password) {
   if (!user || !password) {
