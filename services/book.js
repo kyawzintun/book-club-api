@@ -31,6 +31,8 @@ async function getCounts(userId){
     "ownBookCount": await Book.find({"ownerId": userId}).count(),
     "wishListCount": await Book.find({"requestedId": userId}).count(),
     "requireCount": await Book.find({"ownerId": userId, "requestedId": {$ne: null}}).count(),
+    "givenCount": await TradedBook.find({"originalOwnerId": userId}).count(),
+    "receiveCount": await TradedBook.find({"ownerId": userId}).count(),
   }
   try {
     return count;
@@ -50,6 +52,24 @@ async function getWishListBook(reqId){
 
 async function getRequiredList(ownerId){
   const  book = await Book.find({"ownerId": ownerId, "requestedId": {$ne: null}}).exec();
+  try {
+    return book;
+  } catch (err) {
+    throw new ServerError(err, 500);
+  }
+}
+
+async function getGivenList(ownerId){
+  const  book = await TradedBook.find({"originalOwnerId": ownerId}).exec();
+  try {
+    return book;
+  } catch (err) {
+    throw new ServerError(err, 500);
+  }
+}
+
+async function getReceiveList(ownerId){
+  const  book = await TradedBook.find({"ownerId": ownerId}).exec();
   try {
     return book;
   } catch (err) {
@@ -171,6 +191,8 @@ module.exports = {
   getCounts,
   getWishListBook,
   getRequiredList,
+  getGivenList,
+  getReceiveList,
   addToWishList,
   rejectRequestBook,
   confirmRequestBook,

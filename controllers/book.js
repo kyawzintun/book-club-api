@@ -40,6 +40,16 @@ function getRequiredList(email, password, ownerId) {
   return book.getRequiredList(ownerId);
 }
 
+function getGivenList(email, password, ownerId) {
+  requireAuthentication(email, password);
+  return book.getGivenList(ownerId);
+}
+
+function getReceiveList(email, password, ownerId) {
+  requireAuthentication(email, password);
+  return book.getReceiveList(ownerId);
+}
+
 async function requestBook(email, password, body) {
   requireAuthentication(email, password);
   try {
@@ -78,6 +88,8 @@ module.exports = {
   getBookById,
   getWishList,
   getRequiredList,
+  getGivenList,
+  getReceiveList,
   requestBook,
   rejectRequestBook,
   confirmRequestBook,
