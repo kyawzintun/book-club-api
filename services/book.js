@@ -17,10 +17,23 @@ async function getBooks(ownerId){
   if(ownerId) {
     book = await Book.find({"ownerId": ownerId}).exec();
   }else {
-    book = await Book.find({"requestedId":null}).sort('-createdAt').exec();
+    book = await Book.find({"requestedId":{$eq: null}}).sort('-createdAt').exec();
   }
   try {
     return book;
+  } catch (err) {
+    throw new ServerError(err, 500);
+  }
+}
+
+async function getCounts(userId){
+  const count = {
+    "ownBookCount": await Book.find({"ownerId": userId}).count(),
+    "wishListCount": await Book.find({"requestedId": userId}).count(),
+    "requireCount": await Book.find({"ownerId": userId, "requestedId": {$ne: null}}).count(),
+  }
+  try {
+    return count;
   } catch (err) {
     throw new ServerError(err, 500);
   }
@@ -141,6 +154,7 @@ module.exports = {
   createBook,
   searchBookInGoogle,
   getBooks,
+  getCounts,
   getWishListBook,
   getRequiredList,
   addToWishList,

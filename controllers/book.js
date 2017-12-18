@@ -17,7 +17,12 @@ async function addBook(email,password,bookObj) {
 }
 
 function getAllBook() {
-	return book.getBooks();
+  return book.getBooks();
+}
+
+function getCounts(email, password, userId) {
+  requireAuthentication(email, password);
+	return book.getCounts(userId);
 }
 
 function getBookById(email, password, ownerId) {
@@ -69,6 +74,7 @@ module.exports = {
   searchBooks,
   addBook,
   getAllBook,
+  getCounts,
   getBookById,
   getWishList,
   getRequiredList,

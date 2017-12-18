@@ -29,6 +29,7 @@ router.put('/update-user-info/:userId', c(auth.updateUserInfo, req => [req.heade
  * Book.
  */
 router.get('/get-books', c(book.getAllBook, req => [req.headers]));
+router.get('/get-counts/:userId', c(book.getCounts, req => [req.headers.email, req.headers.password,req.params.userId]));
 router.get('/get-books/:ownerId', c(book.getBookById, req => [req.headers.email, req.headers.password,req.params.ownerId]));
 router.get('/search-books', c(book.searchBooks, req => [req.query.keyword]));
 router.get('/wish-list/:reqId', c(book.getWishList, req => [req.headers.email, req.headers.password, req.params.reqId]));
