@@ -76,8 +76,22 @@ async function rejectRequestBook(body){
 }
 
 async function confirmRequestBook(body){
-  let updatedBook = await Book.findOneAndUpdate({"id": body.id,"ownerId": body.ownerId,"requestedId": body.reqId},{$set :{"ownerId": body.reqId,"requestedId": null}},{new: true});
-  const newTradedBook = new TradedBook(updatedBook);
+  const updatedBook = await Book.findOneAndUpdate({"id": body.id,"ownerId": body.ownerId,"requestedId": body.reqId},{$set :{"ownerId": body.reqId,"requestedId": null}},{new: true});
+  const b = {
+    "id": updatedBook.id,
+    "title": updatedBook.title,
+    "authors": updatedBook.authors,
+    "categories": updatedBook.categories,
+    "description": updatedBook.description,
+    "imageLink": updatedBook.imageLink,
+    "infoLink": updatedBook.infoLink,
+    "pageCount": updatedBook.pageCount,
+    "publishedDate": updatedBook.publishedDate,
+    "ownerId": updatedBook.ownerId,
+    "originalOwnerId": updatedBook.originalOwnerId,
+    "requestedId": null
+  };
+  const newTradedBook = new TradedBook(b);
   try {
     await newTradedBook.validate();
     return newTradedBook.save();

@@ -11,7 +11,7 @@ function requireAuthentication(user, password) {
 async function isBookAlreadyExist(bookId, ownerId) {
   const book = await Book.findOne({"id":bookId, "ownerId": ownerId}).exec();
   if (book) {
-    throw new ServerError('This book is already taken.Try another.', 409);
+    throw new ServerError('This book is already exist in your book list.Try another.', 409);
   }
   return book;
 }

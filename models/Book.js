@@ -32,7 +32,7 @@ const TradedBookSchema = new Schema({
   pageCount: {type: String},
   publishedDate: {type: String},
   requestedId: {type: String},
-});
+}, { timestamps: true });
 
 const Book = mongoose.model('Book', BookSchema);
 const TradedBook = mongoose.model('TradedBook', TradedBookSchema);
