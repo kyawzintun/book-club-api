@@ -2,7 +2,8 @@ const { auth, book } = require('../services');
 const { ServerError } = require('../helpers/server');
 const { requireAuthentication, isBookAlreadyExist } = auth;
 
-function searchBooks(keyword) {
+function searchBooks(emai, password,keyword) {
+  requireAuthentication(email, password);
   return book.searchBookInGoogle(keyword);
 }
 
@@ -16,8 +17,8 @@ async function addBook(email,password,bookObj) {
   }
 }
 
-function getAllBook() {
-  return book.getBooks();
+function getAllBook(keyword) {
+  return book.getBooks(null,keyword);
 }
 
 function getCounts(email, password, userId) {
@@ -27,7 +28,7 @@ function getCounts(email, password, userId) {
 
 function getBookById(email, password, ownerId) {
   requireAuthentication(email, password);
-  return book.getBooks(ownerId);
+  return book.getBooks(ownerId,null);
 }
 
 function getWishList(email, password, reqId) {

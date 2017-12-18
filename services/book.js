@@ -12,12 +12,16 @@ async function createBook(book) {
   }
 }
 
-async function getBooks(ownerId){
+async function getBooks(ownerId, keyword){
   let book;
   if(ownerId) {
     book = await Book.find({"ownerId": ownerId}).exec();
   }else {
-    book = await Book.find({"requestedId":{$eq: null}}).sort('-createdAt').exec();
+    if(keyword) {
+      book = await Book.find({"title": { "$regex": keyword, "$options":"i" }, "requestedId":{$eq: null}}).exec();
+    }else {
+      book = await Book.find({"requestedId":{$eq: null}}).sort('-createdAt').exec();
+    }
   }
   try {
     return book;
