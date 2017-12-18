@@ -23,6 +23,8 @@ const c = controllerHandler;
 router.post('/signin', c(auth.signin, (req, res, next) => [req, res, next]));
 router.post('/signup', c(auth.signup, (req, res, next) => [req, res, next]));
 
+router.put('/update-user-info/:userId', c(auth.updateUserInfo, req => [req.headers.email, req.headers.password,req.params.userId, req.body]));
+
 /**
  * Book.
  */

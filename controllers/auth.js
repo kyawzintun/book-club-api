@@ -1,5 +1,5 @@
 const passport = require('passport');
-
+const { auth, user } = require('../services');
 const { ServerError } = require('../helpers/server');
 require('../helpers/passport-strategies');
 
@@ -35,11 +35,16 @@ function signup(req, res, next) {
 
       return resolve(user);
     })(req, res, next);
-    // console.log('request body ', req.body);
   });
+}
+
+function updateUserInfo(email, password,userId, body) {
+  auth.requireAuthentication(email, password)
+  return user.updateUserInfo(userId, body);
 }
 
 module.exports = {
   signin,
   signup,
+  updateUserInfo
 };
