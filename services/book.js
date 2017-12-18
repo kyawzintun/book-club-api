@@ -115,6 +115,10 @@ async function confirmRequestBook(body){
     "originalOwnerId": updatedBook.originalOwnerId,
     "requestedId": null
   };
+  const book = await TradedBook.findOne({"id":b.id, "originalOwnerId": b.originalOwnerId}).exec();
+  if (book) {
+    throw new ServerError('This book is already exist in traded books logs.', 200);
+  }
   const newTradedBook = new TradedBook(b);
   try {
     await newTradedBook.validate();
