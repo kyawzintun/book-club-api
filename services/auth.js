@@ -16,7 +16,16 @@ async function isBookAlreadyExist(bookId, ownerId) {
   return book;
 }
 
+async function isBookAlreadyRequest(bookId, reqId) {
+  const book = await Book.findOne({"id":bookId, "requestedId": reqId}).exec();
+  if (book) {
+    throw new ServerError('This book is already request.Try another.', 409);
+  }
+  return book;
+}
+
 module.exports = {
   requireAuthentication,
-  isBookAlreadyExist
+  isBookAlreadyExist,
+  isBookAlreadyRequest
 };

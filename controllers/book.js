@@ -1,6 +1,6 @@
 const { auth, book } = require('../services');
 const { ServerError } = require('../helpers/server');
-const { requireAuthentication, isBookAlreadyExist } = auth;
+const { requireAuthentication, isBookAlreadyExist, isBookAlreadyRequest } = auth;
 
 function searchBooks(email, password,keyword) {
   requireAuthentication(email, password);
@@ -54,7 +54,7 @@ function getReceiveList(email, password, ownerId) {
 async function requestBook(email, password, body) {
   requireAuthentication(email, password);
   try {
-    await isBookAlreadyExist(body.id, body.requestedId); 
+    await isBookAlreadyRequest(body.id, body.requestedId); 
     return book.addToWishList(body);
   } catch (error) {
     throw new ServerError(error.message, error.status);
