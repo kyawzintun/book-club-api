@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = Promise;
 
-const dbHost = 'kyawzintun:test@ds133476.mlab.com';
-const dbPort = 33476;
-const dbName = 'dev-book-club';
+const dbHost = '<dbuser>:<dbpassword>@ds133476.mlab.com';
+const dbPort = 123;
+const dbName = '<dbname>';
 const dbURI = `mongodb://${dbHost}:${dbPort}/${dbName}`;
 
 function connect() {

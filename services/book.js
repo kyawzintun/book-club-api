@@ -159,7 +159,7 @@ async function searchBookInGoogle(keyword) {
 
 function searchBook(keyword) {
 	return new Promise(function(resolve, reject){
-	 	const apiUrl = `https://www.googleapis.com/books/v1/volumes?maxResults=40&printType=books&q=${keyword}&key=AIzaSyDii-uTzizQmM5acMXOnYZ1uwEcdapNIm4`
+	 	const apiUrl = `https://www.googleapis.com/books/v1/volumes?maxResults=40&printType=books&q=${keyword}&key=<google-api-key>`
 	 	request(apiUrl, function (error, response, body) {
 		  	if (!error) {
           const books = JSON.parse(body);
