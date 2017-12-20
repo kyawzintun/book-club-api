@@ -2,7 +2,7 @@ const { auth, book } = require('../services');
 const { ServerError } = require('../helpers/server');
 const { requireAuthentication, isBookAlreadyExist } = auth;
 
-function searchBooks(emai, password,keyword) {
+function searchBooks(email, password,keyword) {
   requireAuthentication(email, password);
   return book.searchBookInGoogle(keyword);
 }
